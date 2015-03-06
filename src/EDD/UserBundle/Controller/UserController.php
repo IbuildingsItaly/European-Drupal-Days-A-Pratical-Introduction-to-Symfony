@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class UserController extends Controller {
 
 
-
     /**
      * @Route("/",name="index")
      * @Template()
@@ -31,7 +30,6 @@ class UserController extends Controller {
     public function loginAction(Request $request) {
         $session = $request->getSession();
 
-        // verifica di eventuali errori
         if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(
                 SecurityContextInterface::AUTHENTICATION_ERROR
@@ -42,13 +40,10 @@ class UserController extends Controller {
         } else {
             $error = '';
         }
-
-        // ultimo nome utente inserito
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
         return (
         array(
-            // ultimo nome utente inserito
             'last_username' => $lastUsername,
             'error' => $error,
         )
@@ -113,7 +108,7 @@ class UserController extends Controller {
 
         if ($request->isXmlHttpRequest()) {
             $from = $request->get('total_users'); //param from load.js
-            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(),null,User::NUM_ITEMS,$from);
+            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(), null, User::NUM_ITEMS, $from);
             $response = new JsonResponse();
             try {
                 $out_json = array(
@@ -130,8 +125,8 @@ class UserController extends Controller {
             $response->setData($out_json);
 
             return $response;
-        }else{
-            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(),null,User::NUM_ITEMS,0);
+        } else {
+            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(), null, User::NUM_ITEMS, 0);
         }
 
         return array(
@@ -149,7 +144,6 @@ class UserController extends Controller {
             'user' => $user
         );
     }
-
 
 
 }
