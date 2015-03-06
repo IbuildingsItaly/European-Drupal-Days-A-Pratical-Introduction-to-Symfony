@@ -2,6 +2,8 @@
 
 namespace EDD\UserBundle\Controller;
 
+use EDD\UserBundle\Entity\User;
+use EDD\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -13,8 +15,7 @@ class UserController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        return array(// ...
-        );
+        return array();
     }
 
     /**
@@ -22,7 +23,12 @@ class UserController extends Controller {
      * @Template()
      */
     public function createUserAction() {
-        return array(// ...
+
+        $user = new User();
+        $form = $this->createForm(new UserType(),$user);
+
+        return array(
+            'form' => $form->createView()
         );
     }
 

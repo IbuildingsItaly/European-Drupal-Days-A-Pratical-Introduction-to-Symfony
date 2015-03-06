@@ -1,7 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}EDDUserBundle:User:createUser{% endblock %}
+{% block title %}Create User{% endblock %}
 
 {% block body %}
-<h1>Welcome to the User:createUser page</h1>
+    <h3>Create User</h3>
+
+    <form method="POST" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" value="Create"/>
+    </form>
+
 {% endblock %}
