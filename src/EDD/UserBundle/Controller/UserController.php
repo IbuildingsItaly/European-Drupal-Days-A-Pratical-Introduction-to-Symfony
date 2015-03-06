@@ -8,10 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class UserController extends Controller {
+
+
 
     /**
      * @Route("/",name="index")
@@ -97,6 +100,40 @@ class UserController extends Controller {
      */
     public function readUsersAction() {
         $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findAll();
+        return array(
+            'users' => $users
+        );
+    }
+
+    /**
+     * @Route("/loadUserAjax",name="load_user_ajax",options={"expose"=true}))
+     * @Template("EDDUserBundle:User:readUsers.html.twig")
+     */
+    public function usersAjaxAction(Request $request) {
+
+        if ($request->isXmlHttpRequest()) {
+            $from = $request->get('total_users'); //param from load.js
+            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(),null,User::NUM_ITEMS,$from);
+            $response = new JsonResponse();
+            try {
+                $out_json = array(
+                    'status' => "OK",
+                    'template' => $this->renderView('EDDUserBundle:User:showUser.html.twig', array('users' => $users)),
+                    'show_btn' => count($users) === 0 ? false : true
+                );
+            } catch (\Exception $e) {
+                $out_json = array(
+                    'status' => "KO",
+                    'error' => $e->getMessage(),
+                );
+            }
+            $response->setData($out_json);
+
+            return $response;
+        }else{
+            $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findBy(array(),null,User::NUM_ITEMS,0);
+        }
+
         return array(
             'users' => $users
         );

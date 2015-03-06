@@ -1,0 +1,3 @@
+{% for user in users %}
+    <li>{{ user.username }} - <a href="{{ path('readUser',{id:user.id}) }}">profile</a></li>
+{% endfor %}

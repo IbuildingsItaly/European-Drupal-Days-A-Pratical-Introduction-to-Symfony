@@ -13,6 +13,10 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity(repositoryClass="EDD\UserBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable {
+
+
+    const NUM_ITEMS = 1;
+
     /**
      * @var integer
      *
