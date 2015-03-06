@@ -7,6 +7,7 @@ use EDD\UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller {
 
@@ -22,10 +23,24 @@ class UserController extends Controller {
      * @Route("/createUser",name="create_user")
      * @Template()
      */
-    public function createUserAction() {
+    public function createUserAction(Request $request) {
 
         $user = new User();
         $form = $this->createForm(new UserType(),$user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $encodeFactory = $this->container->get('security.encoder_factory');
+            $encoder = $encodeFactory->getEncoder($user);
+            $user->setPassword($encoder->encodePassword($request->get($form->getName())['password'], $user->getSalt()));
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('index'));
+
+        }
 
         return array(
             'form' => $form->createView()

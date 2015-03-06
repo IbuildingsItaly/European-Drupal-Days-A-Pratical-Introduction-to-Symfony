@@ -1,0 +1,19 @@
+# http://symfony.com/it/doc/current/reference/constraints/UniqueEntity.html
+EDD\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: username
+    properties:
+        username:
+            - Length:
+                min: 3
+                max: 10
+                minMessage: the name has at least {{ limit }} letters
+                maxMessage: The maximum letters allowed are {{ limit }}
+            - Regex:
+                pattern: "/^[a-zA-Z\s]*$/"
+                message: Only letters are allowed
+        email:
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+

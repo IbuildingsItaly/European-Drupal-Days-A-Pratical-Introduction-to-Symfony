@@ -1,6 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        EDD\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
