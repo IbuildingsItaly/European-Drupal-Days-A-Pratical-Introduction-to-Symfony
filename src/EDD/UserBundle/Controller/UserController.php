@@ -4,6 +4,7 @@ namespace EDD\UserBundle\Controller;
 
 use EDD\UserBundle\Entity\User;
 use EDD\UserBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -58,11 +59,11 @@ class UserController extends Controller {
     public function createUserAction(Request $request) {
 
         $user = new User();
-        $form = $this->createForm(new UserType(),$user);
+        $form = $this->createForm(new UserType(), $user);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $encodeFactory = $this->container->get('security.encoder_factory');
             $encoder = $encodeFactory->getEncoder($user);
@@ -93,17 +94,23 @@ class UserController extends Controller {
      * @Template()
      */
     public function readUsersAction() {
-        return array(// ...
+        $users = $this->getDoctrine()->getRepository('EDDUserBundle:User')->findAll();
+        return array(
+            'users' => $users
         );
     }
 
     /**
-     * @Route("/readUser",name="readUser")
+     * @Route("/readUser/{id}",name="readUser")
      * @Template()
+     * @ParamConverter("user",class="EDDUserBundle:User")
      */
-    public function readUserAction() {
-        return array(// ...
+    public function readUserAction(User $user) {
+        return array(
+            'user' => $user
         );
     }
+
+
 
 }

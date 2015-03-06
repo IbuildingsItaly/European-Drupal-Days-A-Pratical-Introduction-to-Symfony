@@ -3,5 +3,14 @@
 {% block title %}EDDUserBundle:User:readUser{% endblock %}
 
 {% block body %}
-<h1>Welcome to the User:readUser page</h1>
+<h3>{{ user.username }}'s profile</h3>
+
+    <ul>
+        <li>{{ user.username }}</li>
+        <li>{{ user.email }}</li>
+    </ul>
+
+    <a href="{{ path('readUsers') }}">Back</a>
+
+
 {% endblock %}

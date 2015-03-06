@@ -1,7 +1,23 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}EDDUserBundle:User:readUsers{% endblock %}
+{% block title %}EDD Users{% endblock %}
 
 {% block body %}
-<h1>Welcome to the User:readUsers page</h1>
+<h3>EDD Users</h3>
+
+    {% if users|length >0 %}
+
+        {% for user in users %}
+            <p>{{ user.username }} - <a href="{{ path('readUser',{id:user.id}) }}">profile</a></p>
+        {% endfor %}
+
+    {% else %}
+
+        <p>No users in Database</p>
+
+    {% endif %}
+
+    <a href="{{ path('index') }}">Back</a>
+
+
 {% endblock %}
