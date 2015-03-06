@@ -3,6 +3,8 @@
 namespace EDD\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * User
@@ -10,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EDD\UserBundle\Entity\UserRepository")
  */
-class User
-{
+class User implements AdvancedUserInterface, \Serializable {
     /**
      * @var integer
      *
@@ -56,18 +57,17 @@ class User
      */
     private $isActive;
 
-    public function __construct(){
+    public function __construct() {
         $this->isActive = true;
-        $this->salt= md5(uniqid(null, true));
+        $this->salt = md5(uniqid(null, true));
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -77,8 +77,7 @@ class User
      * @param string $username
      * @return User
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
 
         return $this;
@@ -87,10 +86,9 @@ class User
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -100,8 +98,7 @@ class User
      * @param string $email
      * @return User
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -110,10 +107,9 @@ class User
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -123,8 +119,7 @@ class User
      * @param string $password
      * @return User
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
 
         return $this;
@@ -133,10 +128,9 @@ class User
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
@@ -146,8 +140,7 @@ class User
      * @param string $salt
      * @return User
      */
-    public function setSalt($salt)
-    {
+    public function setSalt($salt) {
         $this->salt = $salt;
 
         return $this;
@@ -156,10 +149,9 @@ class User
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
-    public function getSalt()
-    {
+    public function getSalt() {
         return $this->salt;
     }
 
@@ -169,8 +161,7 @@ class User
      * @param string $isActive
      * @return User
      */
-    public function setIsActive($isActive)
-    {
+    public function setIsActive($isActive) {
         $this->isActive = $isActive;
 
         return $this;
@@ -179,10 +170,53 @@ class User
     /**
      * Get isActive
      *
-     * @return string 
+     * @return string
      */
-    public function getIsActive()
-    {
+    public function getIsActive() {
         return $this->isActive;
+    }
+
+    public function isAccountNonExpired() {
+        return true;
+    }
+
+    public function isAccountNonLocked() {
+        return true;
+    }
+
+    public function isCredentialsNonExpired() {
+        return true;
+    }
+
+    public function isEnabled() {
+        return $this->isActive;
+    }
+
+    public function serialize() {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt,
+            $this->isActive,
+        ));
+    }
+
+    public function unserialize($serialized) {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt,
+            $this->isActive,
+            ) = unserialize($serialized);
+    }
+
+    public function getRoles() {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials() {
+
     }
 }

@@ -3,7 +3,12 @@
 {% block title %}Edd Homepage{% endblock %}
 
 {% block body %}
-<h3>Welcome to the EDD Homepage</h3>
+    <h3>Welcome to the EDD Homepage</h3>
 
-<a href="{{ path('create_user') }}"><p>Create User</p></a>
+    <a href="{{ path('create_user') }}"><p>Create User</p></a>
+    {% if app.user %}
+        <a href="{{ path('logout') }}"><p>Logout</p></a>
+    {% else %}
+        <a href="{{ path('login') }}"><p>Login</p></a>
+    {% endif %}
 {% endblock %}

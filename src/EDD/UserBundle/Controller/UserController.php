@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class UserController extends Controller {
 
@@ -17,6 +18,37 @@ class UserController extends Controller {
      */
     public function indexAction() {
         return array();
+    }
+
+    /**
+     * @Route("/login",name="login")
+     * @Template()
+     */
+    public function loginAction(Request $request) {
+        $session = $request->getSession();
+
+        // verifica di eventuali errori
+        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                SecurityContextInterface::AUTHENTICATION_ERROR
+            );
+        } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+        } else {
+            $error = '';
+        }
+
+        // ultimo nome utente inserito
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+
+        return (
+        array(
+            // ultimo nome utente inserito
+            'last_username' => $lastUsername,
+            'error' => $error,
+        )
+        );
     }
 
     /**
