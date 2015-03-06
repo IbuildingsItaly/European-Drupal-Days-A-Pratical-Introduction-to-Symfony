@@ -81,12 +81,14 @@ class UserController extends Controller {
     }
 
     /**
-     * @Route("/deleteUser",name="delete_user")
-     * @Template()
+     * @Route("/deleteUser/{id}",name="delete_user")
+     * @ParamConverter("user",class="EDDUserBundle:User")
      */
-    public function deleteUserAction() {
-        return array(// ...
-        );
+    public function deleteUserAction(User $user) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        return $this->redirect($this->generateUrl('readUsers'));
     }
 
     /**
