@@ -1,7 +1,6 @@
 # Getting started
 
-- [Install Symfony](http://symfony.com/download)
-
+- Clone the Project 
 
 - When asked, supply the requested information concerning the MySQL database (make sure you run a MySQL server).
 
