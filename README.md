@@ -2,6 +2,8 @@
 
 - Clone the Project 
 
+- Install [Composer.phar](https://getcomposer.org/download/) inside project
+
 - When asked, supply the requested information concerning the MySQL database (make sure you run a MySQL server).
 
 - Do whatever is needed to get your file permissions right (see also [Setting up Permissions](http://symfony.com/doc/current/book/installation.html)).
@@ -31,3 +33,5 @@ app/console doctrine:schema:create
 > ```
 >
 > Check if everything works. When you request `http://127.0.0.1:8000/` in the browser you should see the "hello page"
+> 
+> Check your php.ini `http://127.0.0.1:8000/config.php`
