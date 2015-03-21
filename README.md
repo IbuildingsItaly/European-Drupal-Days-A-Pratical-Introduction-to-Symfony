@@ -2,7 +2,13 @@
 
 - Clone the Project 
 
-- Install [Composer.phar](https://getcomposer.org/download/) inside project
+- Then
+
+```
+$ cd European-Drupal-Days-A-Pratical-Introduction-to-Symfony
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar install
+```
 
 - When asked, supply the requested information concerning the MySQL database (make sure you run a MySQL server).
 
