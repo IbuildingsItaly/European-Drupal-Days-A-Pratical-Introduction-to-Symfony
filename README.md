@@ -1,69 +1,34 @@
-Symfony Standard Edition
-========================
+# Getting started
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+- [Install Symfony](http://symfony.com/download])
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
 
-What's inside?
---------------
+- When asked, supply the requested information concerning the MySQL database (make sure you run a MySQL server).
 
-The Symfony Standard Edition is configured with the following defaults:
+- Do whatever is needed to get your file permissions right (see also [Setting up Permissions](http://symfony.com/doc/current/book/installation.html)).
 
-  * An AppBundle you can use to start coding;
+- Then see if everything works:
 
-  * Twig as the only configured template engine;
+```
+app/console
+```
 
-  * Doctrine ORM/DBAL;
+- Create the database and the database schema:
 
-  * Swiftmailer;
+```
+app/console doctrine:database:create
+app/console doctrine:schema:create
+```
 
-  * Annotations enabled for everything.
+- Install [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle).
 
-It comes pre-configured with the following bundles:
+- Configure the web server to serve the `/web` directory of this project.
 
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.3/book/installation.html
-[6]:  http://symfony.com/doc/2.3/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.3/book/doctrine.html
-[8]:  http://symfony.com/doc/2.3/book/templating.html
-[9]:  http://symfony.com/doc/2.3/book/security.html
-[10]: http://symfony.com/doc/2.3/cookbook/email.html
-[11]: http://symfony.com/doc/2.3/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.3/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.3/bundles/SensioGeneratorBundle/index.html
+> If you run PHP 5.4 or higher, you don't need to configure the web server for this project, because you can use the
+> Symfony command:
+>
+> ```
+> app/console server:run
+> ```
+>
+> Check if everything works. When you request `http://127.0.0.1:8000/` in the browser you should see the "hello page"
