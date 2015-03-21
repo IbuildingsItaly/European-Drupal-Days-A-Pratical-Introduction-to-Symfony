@@ -1,6 +1,6 @@
 # Getting started
 
-- [Install Symfony](http://symfony.com/download])
+- [Install Symfony](http://symfony.com/download)
 
 
 - When asked, supply the requested information concerning the MySQL database (make sure you run a MySQL server).
