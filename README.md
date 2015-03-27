@@ -41,3 +41,8 @@ app/console doctrine:schema:create
 > Check if everything works. When you request `http://127.0.0.1:8000/` in the browser you should see the "hello page"
 > 
 > Check your php.ini `http://127.0.0.1:8000/config.php`
+
+
+### Slides
+
+[Here you can find the slides](http://www.slideshare.net/ibuildingsIT/a-practical-introduction-to-symfony-european-drupal-days-2015)
